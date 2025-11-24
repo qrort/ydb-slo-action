@@ -1,11 +1,11 @@
 import {
   require_github
-} from "../main-pk20nx4h.js";
+} from "../main-a65vejt4.js";
 import {
   __toESM,
   require_core,
   require_exec
-} from "../main-vn0vc56g.js";
+} from "../main-t8kwkc9h.js";
 
 // init/main.ts
 var import_core2 = __toESM(require_core(), 1), import_exec = __toESM(require_exec(), 1);
