@@ -10,7 +10,7 @@ import { getPullRequestNumber } from './lib/github.js'
 async function main() {
 	let cwd = path.join(process.cwd(), '.slo')
 	let workload = getInput('workload_name') || 'unspecified'
-
+	let disableChaos = getInput('disable_chaos') === 'true'
 	saveState('cwd', cwd)
 	saveState('workload', workload)
 
@@ -48,6 +48,21 @@ async function main() {
 		}
 
 		debug(`Deploy assets copied to ${cwd}`)
+	}
+	{
+		if (disableChaos) {
+			const chaosScenarios = path.join(
+				cwd,
+				'chaos/rootfs/opt/ydb.tech/chaos/scenarios'
+			)
+
+			if (fs.existsSync(chaosScenarios)) {
+				fs.rmSync(chaosScenarios, { recursive: true, force: true })
+			}
+			fs.mkdirSync(chaosScenarios, { recursive: true })
+
+			debug(`Chaos disabled: empty scenarios directory created at ${chaosScenarios}`)
+		}
 	}
 
 	{
